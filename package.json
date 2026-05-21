@@ -1,0 +1,64 @@
+{
+  "name": "critkit",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "Walk your build, crit what's wrong, hand your coding agent a source-anchored to-do list. A react-grab plugin.",
+  "keywords": [
+    "react",
+    "react-grab",
+    "design-review",
+    "code-review",
+    "devtools",
+    "coding-agent",
+    "ai",
+    "design-crit",
+    "qa"
+  ],
+  "author": "Kevin Tenn",
+  "homepage": "https://github.com/kevinsmtenn/critkit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinsmtenn/critkit.git"
+  },
+  "bugs": "https://github.com/kevinsmtenn/critkit/issues",
+  "files": ["dist"],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "motion": "^12.38.0"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "react-dom": "^19",
+    "react-grab": "^0.1.37"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.8.0",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-grab": "^0.1.37",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0"
+  }
+}
