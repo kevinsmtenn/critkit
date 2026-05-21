@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 const PLACEHOLDER = `Paste your crit prompt here.
 
-Run the live demo above — press C, crit a few elements, write notes, then hit Copy Crit Prompt. Paste it in to see exactly what lands in your coding agent.`
+Run the live demo above—press C, crit a few elements, write notes, then hit Copy Crit Prompt. Paste it in to see exactly what lands in your coding agent.`
 
 /** The empty paste target for section 03 — a visitor copies a real prompt out
  * of the live demo and drops it here, closing the crit → copy → paste loop. */

@@ -26,7 +26,7 @@ export function StartCritButton({
       className={cn("font-mono", className)}
     >
       <Crosshair />
-      {on ? "Crit mode on — press Esc to exit" : "Start a crit pass"}
+      {on ? "Crit mode on—press Esc to exit" : "Start a crit pass"}
     </Button>
   )
 }

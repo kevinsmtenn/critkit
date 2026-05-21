@@ -163,26 +163,6 @@ export const CRITKIT_CSS = `
   display: flex; flex-direction: column; gap: 9px; padding: 11px 13px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
-.ck-check {
-  display: flex; align-items: center; gap: 7px;
-  cursor: pointer; user-select: none;
-  font-size: 11px; color: #8a8a8f;
-  transition: color 0.15s ease;
-}
-.ck-check:hover { color: #c4c4c8; }
-.ck-check input {
-  appearance: none; -webkit-appearance: none; margin: 0;
-  width: 14px; height: 14px; flex: none;
-  background: #161617; border: 1px solid rgba(255, 255, 255, 0.2);
-  cursor: pointer; display: grid; place-content: center;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-.ck-check input:checked { background: #f4f4f5; border-color: #f4f4f5; }
-.ck-check input:checked::after {
-  content: ""; width: 3.5px; height: 7px;
-  border: solid #0b0b0c; border-width: 0 1.6px 1.6px 0;
-  transform: translateY(-1px) rotate(45deg);
-}
 .ck-btn {
   width: 100%; background: #f4f4f5; color: #0b0b0c; border: 0;
   padding: 9px 10px; font: 600 12px/1 inherit; cursor: pointer;

@@ -12,7 +12,7 @@ export function LiveCritCount() {
 
   const hint =
     count > 0
-      ? "Open the crit list — docked to your screen edge — and hit Copy Crit Prompt."
+      ? "Open the crit list—docked to your screen edge—and hit Copy Crit Prompt."
       : on
         ? "Crit mode is on. Hover the panel and click anything."
         : "Press C, then click an element in the panel."

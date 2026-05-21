@@ -318,11 +318,10 @@ function Panel({
   onMinimize: () => void
 }) {
   const [copied, setCopied] = useState(false)
-  const [subagents, setSubagents] = useState(false)
 
   const copy = async (): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(buildPrompt(crits, subagents))
+      await navigator.clipboard.writeText(buildPrompt(crits))
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1800)
     } catch {
@@ -397,14 +396,6 @@ function Panel({
       </div>
 
       <div className="ck-panel-foot">
-        <label className="ck-check">
-          <input
-            type="checkbox"
-            checked={subagents}
-            onChange={(event) => setSubagents(event.target.checked)}
-          />
-          Launch subagents
-        </label>
         <button
           className={`ck-btn${copied ? " ck-btn-copied" : ""}`}
           disabled={crits.length === 0}

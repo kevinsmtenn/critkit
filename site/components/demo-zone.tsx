@@ -16,19 +16,17 @@ import { Button } from "@/components/ui/button"
 
 const STEPS: React.ReactNode[] = [
   <>
-    Press <Kbd>C</Kbd> — crit mode arms across the whole page.
+    Press <Kbd>C</Kbd>—crit mode arms across the whole page.
   </>,
-  <>Hover the billing panel; elements highlight. Click one that&apos;s off.</>,
+  <>Hover the panel; elements highlight. Click one that&apos;s off.</>,
   <>
     Type a note, hit <Kbd>⏎</Kbd>. CritKit harvests the DOM context for you.
   </>,
-  <>
-    The crit list docks to your screen edge — open it, hit Copy Crit Prompt.
-  </>,
+  <>The crit list docks to your screen edge—open it, hit Copy Crit Prompt.</>,
 ]
 
 /** An ordinary app surface, built from the same shadcn primitives as the rest
- * of the site — there to be crit, exactly like your own running build. */
+ * of the site, there to be crit exactly like your own running build. */
 function DemoApp() {
   return (
     <div className="w-full max-w-[380px] bg-card ring-1 ring-foreground/10">
@@ -39,33 +37,39 @@ function DemoApp() {
           <span className="size-2.5 border border-border" />
         </span>
         <span className="ml-1 font-mono text-[11px] text-muted-foreground">
-          billing — staging
+          localhost:3000
         </span>
       </div>
 
       <div className="p-5">
         <Card size="sm" className="bg-background">
           <CardHeader className="border-b">
-            <CardTitle>Billing</CardTitle>
+            <CardTitle>Profile</CardTitle>
             <CardDescription>
-              Manage your plan and payment method.
+              How you show up across the workspace.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-3.5 text-xs">
             <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="font-heading text-[13px] text-foreground">
-                  Pro plan
-                </p>
-                <p className="text-muted-foreground">$20 / month</p>
+              <div className="flex items-center gap-2.5">
+                <span
+                  aria-hidden
+                  className="size-9 shrink-0 bg-secondary ring-1 ring-foreground/10"
+                />
+                <div>
+                  <p className="font-heading text-[13px] text-foreground">
+                    Ada Lovelace
+                  </p>
+                  <p className="text-muted-foreground">@ada</p>
+                </div>
               </div>
-              <Badge variant="secondary">PRO</Badge>
+              <Badge variant="secondary">Maintainer</Badge>
             </div>
             <div className="flex items-center justify-between gap-3 border-t border-border pt-3.5">
               <div>
-                <p className="text-foreground">Payment method</p>
+                <p className="text-foreground">Email</p>
                 <p className="font-mono text-muted-foreground">
-                  •••• •••• •••• 4242
+                  ada@example.com
                 </p>
               </div>
               <Button variant="outline" size="xs">
@@ -73,13 +77,13 @@ function DemoApp() {
               </Button>
             </div>
             <p className="text-muted-foreground/45">
-              Renews May 28, 2026 — cancel anytime before the renewal date.
+              Your profile is visible to everyone in the workspace.
             </p>
           </CardContent>
           <CardFooter className="gap-2">
-            <Button size="sm">Manage billing</Button>
+            <Button size="sm">Save changes</Button>
             <Button variant="ghost" size="sm">
-              Cancel plan
+              Cancel
             </Button>
           </CardFooter>
         </Card>
@@ -96,7 +100,7 @@ export function DemoZone() {
           index="02"
           label="Live demo"
           title="Crit this page. Right now."
-          description="CritKit is already running — no install, no sandbox. The billing panel is an ordinary app surface. Walk it the way you'd walk your own build."
+          description="CritKit is already running—no install, no sandbox. The panel below is an ordinary app surface. Walk it the way you'd walk your own build."
         />
       </Reveal>
 

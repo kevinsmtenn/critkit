@@ -15,24 +15,16 @@ function formatSource(crit: Crit): string {
 /**
  * Assemble the crit list into a ready-to-paste agent prompt: a short template
  * wrapper plus one numbered, source-anchored item per crit. This is the thing
- * you copy whole into your coding agent. With `subagents`, the wrapper asks the
- * agent to fan the items out across parallel subagents instead of one pass.
+ * you copy whole into your coding agent.
  */
-export function buildPrompt(crits: Crit[], subagents = false): string {
+export function buildPrompt(crits: Crit[]): string {
   if (crits.length === 0) return ""
 
-  const header = subagents
-    ? [
-        "Here's a crit pass on the running app — a list of fixes to make.",
-        "Work through it with subagents in parallel: dispatch the items across subagents, and group items that touch the same file into one subagent so they don't conflict.",
-        "Each item carries a source location and values harvested from the live DOM.",
-        "",
-      ]
-    : [
-        "Here's a crit pass on the running app — please work through each item top to bottom.",
-        "Each item carries a source location and values harvested from the live DOM.",
-        "",
-      ]
+  const header = [
+    "Here's a crit pass on the running app — please work through each item top to bottom.",
+    "Each item carries a source location and values harvested from the live DOM.",
+    "",
+  ]
 
   const items = crits.map((crit, index) => {
     const lines = [

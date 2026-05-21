@@ -39,8 +39,7 @@ export function SiteFooter() {
               </span>
             </div>
             <p className="mt-4 max-w-xs font-sans text-[13px] leading-relaxed text-muted-foreground">
-              Walk your build, crit what&apos;s wrong, hand your coding agent a
-              source-anchored to-do list.
+              Design crit for your coding agents.
             </p>
             <p className="mt-5 inline-flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
               Press <Kbd>C</Kbd> anywhere to try it.

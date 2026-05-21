@@ -19,7 +19,7 @@ export function CritKitDev() {
 }
 `
 
-const LAYOUT = `// app/layout.tsx — render in development only
+const LAYOUT = `// app/layout.tsx (development only)
 {process.env.NODE_ENV === "development" && <CritKitDev />}
 `
 
@@ -31,7 +31,7 @@ export function Install() {
           index="04"
           label="Install"
           title="Two installs. Dev only."
-          description="CritKit is built on react-grab — it comes in as a peer dependency. Register it once, on the client, in development. It never reaches a production build."
+          description="CritKit is built on react-grab—it comes in as a peer dependency. Register it once, on the client, in development. It never reaches a production build."
         />
       </Reveal>
 
@@ -50,8 +50,8 @@ export function Install() {
               The dynamic import is gated on{" "}
               <code className="font-mono text-xs text-foreground">
                 NODE_ENV
-              </code>{" "}
-              — neither CritKit nor react-grab ships in your production bundle.
+              </code>
+              —neither CritKit nor react-grab ships in your production bundle.
               Nothing to misconfigure into production.
             </p>
           </div>
