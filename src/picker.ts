@@ -1,5 +1,6 @@
 import { motionValue } from "motion/react"
 import { captureElement } from "./capture"
+import { isEditable } from "./shortcut"
 import { critStore } from "./store"
 
 const OVERLAY_ID = "critkit-overlay-root"
@@ -68,7 +69,12 @@ function onClick(event: MouseEvent): void {
 }
 
 function onKeyDown(event: KeyboardEvent): void {
-  if (event.key === "Escape") critStore.setCritMode(false)
+  if (event.key !== "Escape") return
+  // Esc exits crit mode — but not when it's dismissing something inside a text
+  // field (e.g. a crit note in the List). This listener is capture-phase, so a
+  // field's own stopPropagation can't shield it; the guard has to live here.
+  if (event.composedPath().some(isEditable)) return
+  critStore.setCritMode(false)
 }
 
 function setCrosshair(on: boolean): void {

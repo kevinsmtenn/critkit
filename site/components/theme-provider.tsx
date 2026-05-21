@@ -3,6 +3,8 @@
 import * as React from "react"
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes"
 
+import { getCritKit } from "@/lib/critkit"
+
 function ThemeProvider({
   children,
   ...props
@@ -51,7 +53,15 @@ function ThemeHotkey() {
         return
       }
 
-      if (isTypingTarget(event.target)) {
+      // composedPath() pierces shadow roots; event.target would retarget to
+      // CritKit's shadow host and miss a note field being typed into.
+      if (event.composedPath().some(isTypingTarget)) {
+        return
+      }
+
+      // Don't flip the theme out from under CritKit's open capture popover —
+      // focus there may rest on a popover button rather than a text field.
+      if (getCritKit()?.store.getSnapshot().pending) {
         return
       }
 

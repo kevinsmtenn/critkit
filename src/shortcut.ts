@@ -14,6 +14,10 @@ export function isEditable(node: EventTarget): boolean {
 function onKeyDown(event: KeyboardEvent): void {
   if (event.key.toLowerCase() !== "c") return
   if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return
+  // While a capture popover is open the user is composing a crit note — `C`
+  // must never toggle crit mode out from under it, even when focus has slipped
+  // off the note field onto a popover button or the page behind it.
+  if (critStore.getSnapshot().pending) return
   // composedPath pierces shadow roots — so this also catches CritKit's own
   // note field, where `C` must type a character rather than toggle.
   if (event.composedPath().some(isEditable)) return
