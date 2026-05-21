@@ -16,10 +16,17 @@ const fontMono = JetBrains_Mono({
   variable: "--font-mono",
 })
 
+const DESCRIPTION =
+  "CritKit is the design QA step in the agentic coding loop. Walk your running app, crit every flaw, and hand your coding agent a source-anchored to-do list."
+
+const CARD_DESCRIPTION =
+  "Walk your running app, crit every flaw, and hand your coding agent a source-anchored to-do list."
+
 export const metadata: Metadata = {
-  title: "CritKit—Design crit for your coding agents",
-  description:
-    "CritKit is the design QA step in the agentic coding loop. Walk your running app, crit every flaw, and hand your coding agent a source-anchored to-do list.",
+  metadataBase: new URL("https://critkit.dev"),
+  title: "CritKit—Design crit with your coding agents",
+  description: DESCRIPTION,
+  applicationName: "CritKit",
   keywords: [
     "react",
     "design review",
@@ -31,18 +38,20 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Kevin Tenn" }],
   creator: "Kevin Tenn",
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    title: "CritKit—Design crit for your coding agents",
-    description:
-      "The human QA step in the agent loop. Crit your running app, hand your coding agent a source-anchored to-do list.",
+    url: "https://critkit.dev",
+    siteName: "CritKit",
+    title: "CritKit—Design crit with your coding agents",
+    description: CARD_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@kevinsmtenn",
-    title: "CritKit—Design crit for your coding agents",
-    description:
-      "The human QA step in the agent loop. Crit your running app, hand your coding agent a source-anchored to-do list.",
+    site: "@critkitdev",
+    creator: "@critkitdev",
+    title: "CritKit—Design crit with your coding agents",
+    description: CARD_DESCRIPTION,
   },
 }
 

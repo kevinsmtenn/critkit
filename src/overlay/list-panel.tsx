@@ -155,6 +155,9 @@ export function ListPanel({
     void navigator.clipboard
       .writeText(buildPrompt(crits))
       .then(() => {
+        // Copying the prompt ends the session — drop crit mode so the
+        // picker's crosshair clears and the page is interactive again.
+        critStore.setCritMode(false)
         // Surface the panel so the ✓ confirmation is visible even when the
         // shortcut fires while the List is collapsed to its badge.
         critStore.setPanelOpen(true)

@@ -189,7 +189,9 @@ export const CRITKIT_CSS = `
   top: 0;
   left: 0;
   pointer-events: none;
-  border: 2px solid #f5f5f5;
+  /* Brand red — reads on light or dark host apps, and matches the launcher
+     dot that goes red the moment crit mode is armed. */
+  border: 2px solid #ef4444;
   box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.5);
 }
 

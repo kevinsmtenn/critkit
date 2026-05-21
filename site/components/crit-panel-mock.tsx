@@ -29,7 +29,8 @@ const CRITS = [
  * `buildPrompt` in `src/writer.ts` so the mock copies what the product copies. */
 function buildCritPrompt(): string {
   const header = [
-    "Here's a crit session on the running app — please work through each item top to bottom.",
+    "Here's a list of feedback from a crit session — please work through it top to bottom.",
+    "First, turn every item below into a to-do for yourself so you don't skip any.",
     "Each item carries a source location and values harvested from the live DOM.",
     "",
   ]

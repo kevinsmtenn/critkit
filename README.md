@@ -1,6 +1,6 @@
 # CritKit
 
-> Design crit for your coding agents — walk your build, crit what's wrong, hand your agent a source-anchored to-do list.
+> Design crit with your coding agents — walk your build, crit what's wrong, hand your agent a source-anchored to-do list.
 
 CritKit is the design QA step in the agentic coding loop. You build a UI with a
 coding agent (Claude Code, Cursor), open the running app, and walk it — every

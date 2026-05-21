@@ -28,7 +28,7 @@ export function Hero() {
               <h1 className="mt-6 font-mono text-4xl leading-[1.07] font-semibold tracking-tight sm:text-5xl lg:text-[3.4rem]">
                 <span className="block text-foreground">Design crit</span>
                 <span className="block text-muted-foreground">
-                  for your coding agents
+                  with your coding agents
                 </span>
               </h1>
             </Reveal>

@@ -10,7 +10,7 @@ export function PromptOutput() {
           <SectionHeader
             index="03"
             label="The output"
-            title="What you paste."
+            title="Your taste. You paste."
             description="Paste a copied crit prompt into the field to see exactly what your agent receives: every item source-anchored, with values harvested live from the DOM."
           />
         </Reveal>

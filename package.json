@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
-  "description": "Design crit for your coding agents — walk your build, crit what's wrong, hand your agent a source-anchored to-do list.",
+  "description": "Design crit with your coding agents — walk your build, crit what's wrong, hand your agent a source-anchored to-do list.",
   "keywords": [
     "react",
     "design-review",
