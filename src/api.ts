@@ -2,12 +2,11 @@ import { captureElement } from "./capture"
 import { critStore } from "./store"
 
 /**
- * The `window.__CRITKIT__` handle — a small dev-only API, in the spirit of
- * react-grab's own `window.__REACT_GRAB__`. Lets you script a crit pass or
- * inspect the running list without going through react-grab's overlay.
+ * The `window.__CRITKIT__` handle — a small dev-only API. Lets you script a
+ * crit session or inspect the running list straight from the console.
  */
 export interface CritKitApi {
-  /** Open a capture on an element — source resolves via react-grab. */
+  /** Open a capture on an element — source resolves from the React fiber. */
   capture: (element: Element) => void
   /** The crit store: `subscribe`, `getSnapshot`, and mutators. */
   store: typeof critStore

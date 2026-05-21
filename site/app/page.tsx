@@ -1,6 +1,6 @@
 import { SiteNav } from "@/components/site-nav"
 import { Hero } from "@/components/hero"
-import { CritPass } from "@/components/crit-pass"
+import { CritSession } from "@/components/crit-session"
 import { DemoZone } from "@/components/demo-zone"
 import { PromptOutput } from "@/components/prompt-output"
 import { Install } from "@/components/install"
@@ -12,7 +12,7 @@ export default function Page() {
       <SiteNav />
       <main>
         <Hero />
-        <CritPass />
+        <CritSession />
         <DemoZone />
         <PromptOutput />
         <Install />

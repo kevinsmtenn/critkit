@@ -2,10 +2,6 @@
  * Self-contained stylesheet injected into CritKit's shadow root. Kept as a
  * string (not a CSS file) so the package has no build-time CSS pipeline and
  * the styles can't leak into — or be overridden by — the host app.
- *
- * Shadow-DOM encapsulation also means react-grab's page-freeze CSS (which
- * targets main-document elements) never reaches this UI, so its motion runs
- * freely while the page underneath is frozen.
  */
 export const CRITKIT_CSS = `
 .ck-container {
@@ -74,6 +70,8 @@ export const CRITKIT_CSS = `
   color: #c4c4c8;
 }
 .ck-kbd-invert { background: #0b0b0c; border-color: #0b0b0c; color: #f4f4f5; }
+.ck-btn-face { display: inline-flex; align-items: center; gap: 7px; }
+.ck-kbd-group { display: inline-flex; align-items: center; gap: 3px; }
 
 /* — the draggable dock + snap hints — */
 .ck-dock {
@@ -158,7 +156,6 @@ export const CRITKIT_CSS = `
 .ck-row-src {
   flex: 1; min-width: 0; font-size: 10px; color: #7a7a7f; word-break: break-all;
 }
-.ck-obs { margin-top: 5px; font-size: 10px; line-height: 1.6; color: #6a6a6f; }
 .ck-panel-foot {
   display: flex; flex-direction: column; gap: 9px; padding: 11px 13px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);

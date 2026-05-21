@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -26,7 +27,13 @@ type StartDrag = (event: ReactPointerEvent) => void
 const MAGNET_OUTER = 150
 const MAGNET_INNER = 60
 
-/** The List's noun — singular for an empty or single-crit pass. */
+// Keys shown on the Copy button — ⌘⌥C on macOS, Ctrl+Alt+C elsewhere.
+const COPY_KEYS =
+  typeof navigator !== "undefined" && /Mac/i.test(navigator.userAgent)
+    ? ["⌘", "⌥", "C"]
+    : ["Ctrl", "Alt", "C"]
+
+/** The List's noun — singular for an empty or single-crit session. */
 function critsLabel(count: number): string {
   return count <= 1 ? "Crit" : "Crits"
 }
@@ -65,15 +72,15 @@ export function ListPanel({
   critMode: boolean
 }) {
   const reduce = !!useReducedMotion()
-  // The List stays up for the whole pass. Once crit mode is on it is always
+  // The List stays up for the whole session. Once crit mode is on it is always
   // visible — through every pick → capture → commit, with no flicker — since
-  // crit mode never drops mid-pass (the picker only pauses for the popover).
-  // Afterwards it lingers while the pass still has crits to copy; only turning
+  // crit mode never drops mid-session (the picker only pauses for the popover).
+  // Afterwards it lingers while the session still has crits to copy; only turning
   // crit mode off can dismiss it.
   const visible = critMode || crits.length > 0
-  // Expanded to the full panel for the whole live pass (and once the user has
+  // Expanded to the full panel for the whole live session (and once the user has
   // opened it). The collapsed badge is only ever for an idle, crit-mode-off
-  // pass the user has folded away.
+  // session the user has folded away.
   const expanded = open || critMode
 
   const dockRef = useRef<HTMLDivElement>(null)
@@ -83,12 +90,14 @@ export function ListPanel({
   const [size, setSize] = useState<DockSize | null>(null)
   const [dragging, setDragging] = useState(false)
   const [hintAnchor, setHintAnchor] = useState<DockAnchor>(anchor)
+  const [copied, setCopied] = useState(false)
   const placed = useRef(false)
   const draggingRef = useRef(false)
   const draggedRef = useRef(false)
   const dragStart = useRef({ x: 0, y: 0 })
   const prevAnchor = useRef(anchor)
   const settleAnimations = useRef<Array<{ stop: () => void }>>([])
+  const copyTimer = useRef(0)
 
   const stopSettling = (): void => {
     settleAnimations.current.forEach((animation) => animation.stop())
@@ -138,6 +147,37 @@ export function ListPanel({
   useEffect(() => {
     if (!visible) placed.current = false
   }, [visible])
+
+  // Copy the agent prompt and flash the confirmation — shared by the panel's
+  // Copy button and the ⌘⌥C shortcut.
+  const copyPrompt = useCallback((): void => {
+    if (crits.length === 0) return
+    void navigator.clipboard
+      .writeText(buildPrompt(crits))
+      .then(() => {
+        // Surface the panel so the ✓ confirmation is visible even when the
+        // shortcut fires while the List is collapsed to its badge.
+        critStore.setPanelOpen(true)
+        setCopied(true)
+        window.clearTimeout(copyTimer.current)
+        copyTimer.current = window.setTimeout(() => setCopied(false), 1800)
+      })
+      .catch(() => {
+        // Clipboard blocked (no focus / permissions) — leave the button as-is.
+      })
+  }, [crits])
+
+  // ⌘⌥C (⌃⌥C on Windows/Linux) copies the prompt from anywhere in the session.
+  useEffect(() => {
+    const onCopyKey = (event: KeyboardEvent): void => {
+      if (event.repeat || event.code !== "KeyC" || event.shiftKey) return
+      if (!((event.metaKey || event.ctrlKey) && event.altKey)) return
+      event.preventDefault()
+      copyPrompt()
+    }
+    document.addEventListener("keydown", onCopyKey)
+    return () => document.removeEventListener("keydown", onCopyKey)
+  }, [copyPrompt])
 
   if (!visible) return null
 
@@ -226,6 +266,8 @@ export function ListPanel({
               crits={crits}
               reduce={reduce}
               collapsible={!critMode}
+              copied={copied}
+              onCopy={copyPrompt}
               onGrab={startDrag}
               onMinimize={minimize}
             />
@@ -308,27 +350,19 @@ function Panel({
   crits,
   reduce,
   collapsible,
+  copied,
+  onCopy,
   onGrab,
   onMinimize,
 }: {
   crits: Crit[]
   reduce: boolean
   collapsible: boolean
+  copied: boolean
+  onCopy: () => void
   onGrab: StartDrag
   onMinimize: () => void
 }) {
-  const [copied, setCopied] = useState(false)
-
-  const copy = async (): Promise<void> => {
-    try {
-      await navigator.clipboard.writeText(buildPrompt(crits))
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1800)
-    } catch {
-      // Clipboard blocked (no focus / permissions) — leave the button as-is.
-    }
-  }
-
   return (
     <motion.div
       className="ck-panel"
@@ -399,17 +433,31 @@ function Panel({
         <button
           className={`ck-btn${copied ? " ck-btn-copied" : ""}`}
           disabled={crits.length === 0}
-          onClick={() => void copy()}
+          onClick={onCopy}
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
               key={copied ? "copied" : "idle"}
+              className="ck-btn-face"
               initial={reduce ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
               transition={{ duration: 0.14 }}
             >
-              {copied ? "✓ Copied — paste to your agent" : "Copy Crit Prompt"}
+              {copied ? (
+                "✓ Copied — paste to your coding agent"
+              ) : (
+                <>
+                  Copy Crit Prompt
+                  <span className="ck-kbd-group">
+                    {COPY_KEYS.map((key) => (
+                      <kbd key={key} className="ck-kbd">
+                        {key}
+                      </kbd>
+                    ))}
+                  </span>
+                </>
+              )}
             </motion.span>
           </AnimatePresence>
         </button>

@@ -1,10 +1,9 @@
 import { Reveal } from "@/components/reveal"
-import { Kbd } from "@/components/kbd"
 import { CopyButton } from "@/components/copy-button"
 import { StartCritButton } from "@/components/start-crit-button"
 import { CritPanelMock } from "@/components/crit-panel-mock"
 
-const INSTALL = "npm i -D critkit react-grab"
+const INSTALL = "npm i -D critkit"
 
 export function Hero() {
   return (
@@ -21,17 +20,15 @@ export function Hero() {
             <Reveal>
               <div className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.18em] uppercase text-muted-foreground">
                 <span className="size-1.5 bg-destructive" />
-                Open source · a react-grab plugin
+                Open source · MIT licensed
               </div>
             </Reveal>
 
             <Reveal delay={0.06}>
               <h1 className="mt-6 font-mono text-4xl leading-[1.07] font-semibold tracking-tight sm:text-5xl lg:text-[3.4rem]">
+                <span className="block text-foreground">Design crit</span>
                 <span className="block text-muted-foreground">
-                  Walk your build.
-                </span>
-                <span className="block text-foreground">
-                  Crit what&apos;s wrong.
+                  for your coding agents
                 </span>
               </h1>
             </Reveal>
@@ -40,7 +37,7 @@ export function Hero() {
               <p className="mt-6 max-w-xl font-sans text-[15px] leading-relaxed text-muted-foreground">
                 CritKit is{" "}
                 <span className="text-foreground">
-                  the human QA step in the agent loop
+                  the design QA step in the agentic coding loop
                 </span>
                 . Open your running app, walk it, and crit every flaw—spacing,
                 a color, a label, an alignment. CritKit hands your coding agent
@@ -48,14 +45,10 @@ export function Hero() {
               </p>
             </Reveal>
 
-            {/* CTA — the live state, the C shortcut, and the action, as one */}
+            {/* CTA — start a crit session; the C shortcut sits inside the button */}
             <Reveal delay={0.18}>
-              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <div className="mt-8">
                 <StartCritButton />
-                <span className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                  <span className="size-1.5 animate-pulse bg-[oklch(0.72_0.16_150)]" />
-                  Live on this page—or press <Kbd>C</Kbd>
-                </span>
               </div>
             </Reveal>
 

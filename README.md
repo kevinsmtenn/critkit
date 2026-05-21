@@ -1,28 +1,27 @@
 # CritKit
 
-> Walk your build, crit what's wrong, hand your coding agent a source-anchored to-do list.
+> Design crit for your coding agents — walk your build, crit what's wrong, hand your agent a source-anchored to-do list.
 
-CritKit is the human QA step in the agent loop. You build a UI with a coding
-agent (Claude Code, Cursor), open the running app, and walk it — every time
-something's off (spacing, a color, a label, an alignment), you **crit** it: hit
-a key, click the element, drop a note.
+CritKit is the design QA step in the agentic coding loop. You build a UI with a
+coding agent (Claude Code, Cursor), open the running app, and walk it — every
+time something's off (spacing, a color, a label, an alignment), you **crit**
+it: hit a key, click the element, drop a note.
 
-CritKit gathers the pass into a single ready-to-paste prompt. Each crit carries
-its **source location** — file, line, component — plus values harvested from
-the live DOM, so you barely type. Paste the prompt to your agent; it works
-through the list top to bottom.
+CritKit gathers the session into a single ready-to-paste prompt. Each crit carries
+its **source** — the component that rendered the element — plus values
+harvested from the live DOM, so you barely type. Paste the prompt to your
+agent; it works through the list top to bottom.
 
 **Agent builds → you crit → agent fixes.**
 
 ## Install
 
 ```bash
-npm i -D critkit react-grab
+npm i -D critkit
 ```
 
-CritKit is built on [react-grab](https://github.com/aidenybai/react-grab), which
-it uses headlessly to resolve a clicked element back to its source. `react-grab`
-is a peer dependency.
+CritKit is a standalone, dev-only tool — zero runtime dependencies, no build
+step, nothing to configure.
 
 ## Usage
 
@@ -48,13 +47,23 @@ Render it only in development — e.g. in your root layout:
 
 CritKit never loads in a production build — zero production footprint.
 
-## The crit pass
+## The crit session
 
 - Press **`C`** (or click the launcher) to enter crit mode.
 - Hover any element — it highlights. Click to crit it.
 - Type a note, hit `⏎`. Repeat across the page.
 - Open the list and **Copy Crit Prompt** — paste it to your agent.
 - `Esc` exits crit mode.
+
+## How source resolution works
+
+CritKit resolves a clicked element to the component that rendered it by reading
+React's dev-mode fiber data — no build plugin, no instrumentation. Because that
+data only exists in a development build, CritKit is dev-only by nature.
+
+## Requirements
+
+React 19, on the client.
 
 ## License
 

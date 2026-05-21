@@ -19,10 +19,9 @@ const fontMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "CritKit—Design crit for your coding agents",
   description:
-    "CritKit is the human QA step in the agent loop. Walk your running app, crit every flaw, and hand your coding agent a source-anchored to-do list. An open-source react-grab plugin.",
+    "CritKit is the design QA step in the agentic coding loop. Walk your running app, crit every flaw, and hand your coding agent a source-anchored to-do list.",
   keywords: [
     "react",
-    "react-grab",
     "design review",
     "coding agent",
     "Claude Code",

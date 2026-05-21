@@ -3,8 +3,8 @@ import { critStore } from "../store"
 
 /**
  * CritKit's always-present launcher — toggles crit mode (the hover-to-pick
- * state). It's the one bit of CritKit chrome that's always on screen, and
- * replaces react-grab's toolbar as the entry point into a pass.
+ * state). It's the one bit of CritKit chrome that's always on screen, and the
+ * entry point into a crit session.
  *
  * Docked at 6 o'clock (bottom-centre). The slot wrapper handles the centring
  * so the button is free to animate its own transform.

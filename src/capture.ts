@@ -1,5 +1,5 @@
-import { getGlobalApi } from "react-grab"
 import { harvest, inferCategory } from "./harvest"
+import { resolveSource } from "./source"
 import { critStore } from "./store"
 import type { CritSource } from "./types"
 
@@ -28,27 +28,10 @@ export function captureCrit(element: Element, source: CritSource): void {
 }
 
 /**
- * Open a capture for an element: the popover appears immediately with the tag
- * name, and react-grab's resolved source location is folded in as soon as it
- * resolves. The shared path behind `onElementSelect` and `window.__CRITKIT__`.
+ * Open a capture for an element — resolve its source from the React fiber's
+ * owner and debug stack (see `source.ts`), then hand it to the popover. The
+ * shared entry point for the picker and `window.__CRITKIT__`.
  */
 export function captureElement(element: Element): void {
-  captureCrit(element, { tagName: element.tagName.toLowerCase() })
-
-  const reactGrab = getGlobalApi()
-  if (!reactGrab) return
-
-  void reactGrab
-    .getSource(element)
-    .then((info) => {
-      if (!info) return
-      critStore.patchPendingSource(element, {
-        filePath: info.filePath,
-        lineNumber: info.lineNumber ?? undefined,
-        componentName: info.componentName ?? undefined,
-      })
-    })
-    .catch(() => {
-      // Source resolution failed — the crit keeps its tag name alone.
-    })
+  captureCrit(element, resolveSource(element))
 }

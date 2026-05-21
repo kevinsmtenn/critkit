@@ -75,9 +75,9 @@ function makeId(): string {
 }
 
 /**
- * Module-singleton store for the crit pass. Drives the overlay via
+ * Module-singleton store for the crit session. Drives the overlay via
  * `useSyncExternalStore`; mirrors committed crits to `sessionStorage` so a
- * reload doesn't drop a pass in progress.
+ * reload doesn't drop a session in progress.
  */
 export const critStore = {
   subscribe(listener: () => void): () => void {
@@ -99,19 +99,6 @@ export const critStore = {
     setState({ pending: null })
   },
 
-  /** Fold late-resolving source info into the in-progress capture. */
-  patchPendingSource(element: Element, source: Partial<Crit>): void {
-    if (!state.pending || state.pending.element !== element) return
-    setState({
-      pending: {
-        ...state.pending,
-        filePath: source.filePath ?? state.pending.filePath,
-        lineNumber: source.lineNumber ?? state.pending.lineNumber,
-        componentName: source.componentName ?? state.pending.componentName,
-      },
-    })
-  },
-
   /** Turn the in-progress capture into a committed crit; reveal the List. */
   commitCrit(note: string): void {
     const pending = state.pending
@@ -129,7 +116,7 @@ export const critStore = {
     }
     const crits = [...state.crits, crit]
     persist(crits)
-    // Leaving a crit expands the List so the running pass stays in view.
+    // Leaving a crit expands the List so the running session stays in view.
     setState({ crits, pending: null, panelOpen: true })
   },
 

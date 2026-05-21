@@ -58,8 +58,7 @@ function Popover({ pending }: { pending: PendingCapture }) {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [note, setNote] = useState("")
 
-  // Measured at render: react-grab has already unfrozen the page by the time
-  // the popover mounts, so the element's live rect is current. Falls back to
+  // Measured at render so the element's live rect is current. Falls back to
   // the rect captured at selection time if the element has since detached.
   const placement = useMemo<Placement>(() => {
     const rect = pending.element.isConnected
@@ -105,7 +104,7 @@ function Popover({ pending }: { pending: PendingCapture }) {
           ref={inputRef}
           className="ck-input"
           rows={3}
-          placeholder="Consider…"
+          placeholder="What needs to change?"
           value={note}
           onChange={(event) => setNote(event.target.value)}
           onKeyDown={(event) => {
@@ -124,10 +123,10 @@ function Popover({ pending }: { pending: PendingCapture }) {
       <div className="ck-pop-foot">
         <button type="button" className="ck-foot-cancel" onClick={cancel}>
           <kbd className="ck-kbd">esc</kbd>
-          cancel
+          Cancel
         </button>
         <button type="button" className="ck-foot-add" onClick={commit}>
-          add crit
+          Crit
           <kbd className="ck-kbd ck-kbd-invert">⏎</kbd>
         </button>
       </div>

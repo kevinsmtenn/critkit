@@ -30,8 +30,8 @@ export function Install() {
         <SectionHeader
           index="04"
           label="Install"
-          title="Two installs. Dev only."
-          description="CritKit is built on react-grab—it comes in as a peer dependency. Register it once, on the client, in development. It never reaches a production build."
+          title="One install. Dev only."
+          description="Register CritKit once, on the client, in development. It never touches a production build."
         />
       </Reveal>
 
@@ -51,8 +51,8 @@ export function Install() {
               <code className="font-mono text-xs text-foreground">
                 NODE_ENV
               </code>
-              —neither CritKit nor react-grab ships in your production bundle.
-              Nothing to misconfigure into production.
+              —CritKit never ships in your production bundle. Nothing to
+              misconfigure into production.
             </p>
           </div>
         </Reveal>

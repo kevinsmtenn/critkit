@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils"
 import { CopyButton } from "@/components/copy-button"
 
 const MANAGERS = [
-  { id: "npm", cmd: "npm i -D critkit react-grab" },
-  { id: "pnpm", cmd: "pnpm add -D critkit react-grab" },
-  { id: "yarn", cmd: "yarn add -D critkit react-grab" },
-  { id: "bun", cmd: "bun add -d critkit react-grab" },
+  { id: "npm", cmd: "npm i -D critkit" },
+  { id: "pnpm", cmd: "pnpm add -D critkit" },
+  { id: "yarn", cmd: "yarn add -D critkit" },
+  { id: "bun", cmd: "bun add -d critkit" },
 ]
 
 export function InstallTabs() {

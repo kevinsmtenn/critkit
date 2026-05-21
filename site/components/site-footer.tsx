@@ -19,9 +19,10 @@ const LINK_GROUPS = [
     ],
   },
   {
-    title: "Built on",
+    title: "Social",
     links: [
-      { label: "react-grab", href: "https://github.com/aidenybai/react-grab" },
+      { label: "X (Twitter)", href: "https://x.com/critkitdev" },
+      { label: "Threads", href: "https://www.threads.com/@critkitdev" },
     ],
   },
 ]
@@ -70,10 +71,10 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-3 border-t border-border py-6 font-mono text-[11px] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <span>MIT © 2026 Kevin Tenn</span>
+          <span>MIT © {new Date().getFullYear()} Kevin Tenn</span>
           <span className="flex items-center gap-4">
             <span className="hidden sm:inline">
-              An open-source react-grab plugin
+              An open-source design-crit tool
             </span>
             <a
               href="https://github.com/kevinsmtenn/critkit"

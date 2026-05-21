@@ -8,7 +8,7 @@ let root: Root | null = null
 /**
  * Mount CritKit's overlay into a dedicated shadow root on `<body>`. Idempotent
  * — safe across HMR. The shadow root isolates CritKit's styles from the host
- * app and keeps its motion exempt from react-grab's main-document page-freeze.
+ * app, both ways.
  *
  * The stylesheet itself is rendered inside {@link OverlayApp} (not injected
  * here) so that editing it hot-reloads via Fast Refresh.

@@ -26,7 +26,10 @@ export function StartCritButton({
       className={cn("font-mono", className)}
     >
       <Crosshair />
-      {on ? "Crit mode on—press Esc to exit" : "Start a crit pass"}
+      {on ? "Crit mode on" : "Start a crit"}
+      <kbd className="ml-0.5 inline-flex h-4 min-w-4 items-center justify-center border border-current/40 px-1 text-[10px] leading-none">
+        {on ? "Esc" : "C"}
+      </kbd>
     </Button>
   )
 }

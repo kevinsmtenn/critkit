@@ -12,7 +12,7 @@ import { BorderBeam } from "@/components/border-beam"
 
 const CRITS = [
   {
-    source: "<SectionHeader> crit-pass.tsx:24",
+    source: "<SectionHeader> crit-session.tsx:24",
     note: "Eyebrow should be sentence case, not all-caps.",
   },
   {
@@ -29,7 +29,7 @@ const CRITS = [
  * `buildPrompt` in `src/writer.ts` so the mock copies what the product copies. */
 function buildCritPrompt(): string {
   const header = [
-    "Here's a crit pass on the running app — please work through each item top to bottom.",
+    "Here's a crit session on the running app — please work through each item top to bottom.",
     "Each item carries a source location and values harvested from the live DOM.",
     "",
   ]
@@ -62,7 +62,7 @@ export function CritPanelMock() {
 
   return (
     <div className="ck-ui relative w-full max-w-[348px] border border-white/[0.14] bg-[#0b0b0c] text-[#f4f4f5] shadow-[0_36px_90px_-30px_rgba(0,0,0,0.85)]">
-      <BorderBeam durationSeconds={9} thicknessPx={1.5} glowPx={5} />
+      <BorderBeam />
 
       {/* header — [count] CRITS · Clear All · collapse */}
       <div className="flex items-center justify-between border-b border-white/[0.08] px-[13px] py-[11px]">

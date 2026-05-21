@@ -17,7 +17,7 @@ export interface DockAnchor {
   v: DockV
 }
 
-/** Source + identity info react-grab resolves for a selected element. */
+/** Source + identity info CritKit resolves for a selected element. */
 export interface CritSource {
   filePath?: string
   lineNumber?: number
@@ -35,7 +35,7 @@ export interface CapturedRect {
   height: number
 }
 
-/** A finished crit — one line item in the pass. */
+/** A finished crit — one line item in the session. */
 export interface Crit extends CritSource {
   id: string
   category: CritCategory
@@ -45,7 +45,7 @@ export interface Crit extends CritSource {
   createdAt: number
 }
 
-/** A selection captured from react-grab, awaiting a note. */
+/** A selection captured by the picker, awaiting a note. */
 export interface PendingCapture extends CritSource {
   /** Live element reference — re-measured when the popover opens. */
   element: Element

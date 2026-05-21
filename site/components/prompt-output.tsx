@@ -11,7 +11,7 @@ export function PromptOutput() {
             index="03"
             label="The output"
             title="What you paste."
-            description="Run the live demo above—press C, crit a few elements, Copy Crit Prompt. Paste it into the field to see exactly what your agent receives: every item source-anchored, with values harvested live from the DOM."
+            description="Paste a copied crit prompt into the field to see exactly what your agent receives: every item source-anchored, with values harvested live from the DOM."
           />
         </Reveal>
 

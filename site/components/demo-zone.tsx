@@ -58,9 +58,9 @@ function DemoApp() {
                 />
                 <div>
                   <p className="font-heading text-[13px] text-foreground">
-                    Ada Lovelace
+                    Richard Hendricks
                   </p>
-                  <p className="text-muted-foreground">@ada</p>
+                  <p className="text-muted-foreground">@richard</p>
                 </div>
               </div>
               <Badge variant="secondary">Maintainer</Badge>
@@ -69,7 +69,7 @@ function DemoApp() {
               <div>
                 <p className="text-foreground">Email</p>
                 <p className="font-mono text-muted-foreground">
-                  ada@example.com
+                  richard@piedpiper.com
                 </p>
               </div>
               <Button variant="outline" size="xs">

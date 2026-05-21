@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
-  "description": "Walk your build, crit what's wrong, hand your coding agent a source-anchored to-do list. A react-grab plugin.",
+  "description": "Design crit for your coding agents — walk your build, crit what's wrong, hand your agent a source-anchored to-do list.",
   "keywords": [
     "react",
-    "react-grab",
     "design-review",
     "code-review",
     "devtools",
@@ -46,8 +45,7 @@
   },
   "peerDependencies": {
     "react": "^19",
-    "react-dom": "^19",
-    "react-grab": "^0.1.37"
+    "react-dom": "^19"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -58,7 +56,6 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-grab": "^0.1.37",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.0"
