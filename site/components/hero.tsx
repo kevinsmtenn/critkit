@@ -39,7 +39,7 @@ export function Hero() {
                 <span className="text-foreground">
                   the design QA step in the agentic coding loop
                 </span>
-                . Open your running app, walk it, and crit every flaw—spacing,
+                . Open your running app, walk it, and crit every flaw: spacing,
                 a color, a label, an alignment. CritKit hands your coding agent
                 a source-anchored to-do list it works top to bottom.
               </p>

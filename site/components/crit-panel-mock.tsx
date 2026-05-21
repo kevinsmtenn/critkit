@@ -7,8 +7,8 @@ import { BorderBeam } from "@/components/border-beam"
 /** A faithful still of CritKit's real list panel (`src/overlay/list-panel.tsx`):
  * header is `[count] CRITS` + Clear All + ✕; each row leads with the source
  * location and a delete control, the editable note sits beneath it. The footer
- * "Copy Crit Prompt" button is live — it writes the same prompt shape the real
- * product emits (`src/writer.ts` → `buildPrompt`) to the clipboard. */
+ * "Copy 3 crits as a prompt" button is live — it writes the same prompt shape
+ * the real product emits (`src/writer.ts` → `buildPrompt`) to the clipboard. */
 
 const CRITS = [
   {
@@ -29,7 +29,7 @@ const CRITS = [
  * `buildPrompt` in `src/writer.ts` so the mock copies what the product copies. */
 function buildCritPrompt(): string {
   const header = [
-    "Here's a list of feedback from a crit session — please work through it top to bottom.",
+    "Here's a list of feedback from a crit session. Please work through it top to bottom.",
     "First, turn every item below into a to-do for yourself so you don't skip any.",
     "Each item carries a source location and values harvested from the live DOM.",
     "",
@@ -118,7 +118,7 @@ export function CritPanelMock() {
           }}
           className="flex w-full items-center justify-center bg-[#f4f4f5] px-2.5 py-[9px] text-[12px] font-semibold text-[#0b0b0c] transition-opacity hover:opacity-90"
         >
-          {copied ? "✓ Copied" : "Copy Crit Prompt"}
+          {copied ? "✓ Copied 3 crits as a prompt" : "Copy 3 crits as a prompt"}
         </button>
       </div>
     </div>

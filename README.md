@@ -52,7 +52,7 @@ CritKit never loads in a production build — zero production footprint.
 - Press **`C`** (or click the launcher) to enter crit mode.
 - Hover any element — it highlights. Click to crit it.
 - Type a note, hit `⏎`. Repeat across the page.
-- Open the list and **Copy Crit Prompt** — paste it to your agent.
+- Open the list and **copy the crit prompt** — paste it to your agent.
 - `Esc` exits crit mode.
 
 ## How source resolution works

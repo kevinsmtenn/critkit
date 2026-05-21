@@ -2,6 +2,7 @@
   "name": "critkit",
   "version": "0.1.0",
   "type": "module",
+  "packageManager": "pnpm@10.33.3",
   "license": "MIT",
   "description": "Design crit with your coding agents — walk your build, crit what's wrong, hand your agent a source-anchored to-do list.",
   "keywords": [

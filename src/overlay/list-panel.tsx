@@ -22,6 +22,12 @@ import { buildPrompt } from "../writer"
 
 type StartDrag = (event: ReactPointerEvent) => void
 
+/** "Copy 3 crits as a prompt" — the footer button label, count-aware and
+ * pluralized. `verb` swaps "Copy" → "Copied" for the post-copy ✓ state. */
+function copyLabel(count: number, verb: "Copy" | "Copied"): string {
+  return `${verb} ${count} ${count === 1 ? "crit" : "crits"} as a prompt`
+}
+
 // Magnet field: inside OUTER the dock is pulled toward the nearest anchor;
 // inside INNER it locks fully onto it.
 const MAGNET_OUTER = 150
@@ -148,8 +154,16 @@ export function ListPanel({
     if (!visible) placed.current = false
   }, [visible])
 
-  // Copy the agent prompt and flash the confirmation — shared by the panel's
-  // Copy button and the ⌘⌥C shortcut.
+  // Flash the footer button's ✓ confirmation — shared by the manual Copy
+  // button, the ⌘⌥C shortcut, and the per-capture auto-copy.
+  const flashCopied = useCallback((): void => {
+    setCopied(true)
+    window.clearTimeout(copyTimer.current)
+    copyTimer.current = window.setTimeout(() => setCopied(false), 1800)
+  }, [])
+
+  // Copy the agent prompt — shared by the panel's Copy button and the ⌘⌥C
+  // shortcut. An explicit copy ends the session.
   const copyPrompt = useCallback((): void => {
     if (crits.length === 0) return
     void navigator.clipboard
@@ -161,14 +175,28 @@ export function ListPanel({
         // Surface the panel so the ✓ confirmation is visible even when the
         // shortcut fires while the List is collapsed to its badge.
         critStore.setPanelOpen(true)
-        setCopied(true)
-        window.clearTimeout(copyTimer.current)
-        copyTimer.current = window.setTimeout(() => setCopied(false), 1800)
+        flashCopied()
       })
       .catch(() => {
         // Clipboard blocked (no focus / permissions) — leave the button as-is.
       })
-  }, [crits])
+  }, [crits, flashCopied])
+
+  // Every capture refreshes the clipboard with the full prompt so it's always
+  // ready to paste — without ending the session. prevCount starts at the
+  // mounted length so crits restored from sessionStorage don't auto-copy.
+  const prevCount = useRef(crits.length)
+  useEffect(() => {
+    if (crits.length > prevCount.current) {
+      void navigator.clipboard
+        .writeText(buildPrompt(crits))
+        .then(flashCopied)
+        .catch(() => {
+          // Clipboard blocked (no focus / permissions) — leave the button as-is.
+        })
+    }
+    prevCount.current = crits.length
+  }, [crits, flashCopied])
 
   // ⌘⌥C (⌃⌥C on Windows/Linux) copies the prompt from anywhere in the session.
   useEffect(() => {
@@ -448,10 +476,10 @@ function Panel({
               transition={{ duration: 0.14 }}
             >
               {copied ? (
-                "✓ Copied — paste to your coding agent"
+                `✓ ${copyLabel(crits.length, "Copied")}`
               ) : (
                 <>
-                  Copy Crit Prompt
+                  {copyLabel(crits.length, "Copy")}
                   <span className="ck-kbd-group">
                     {COPY_KEYS.map((key) => (
                       <kbd key={key} className="ck-kbd">

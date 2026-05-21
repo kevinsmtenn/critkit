@@ -45,6 +45,18 @@ export function SiteFooter() {
             <p className="mt-5 inline-flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
               Press <Kbd>C</Kbd> anywhere to try it.
             </p>
+            <p className="mt-4 font-sans text-[13px] text-muted-foreground">
+              Inspired by{" "}
+              <a
+                href="https://github.com/aidenybai/react-grab"
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-2 transition-colors hover:text-foreground"
+              >
+                React Grab
+              </a>
+              .
+            </p>
           </div>
 
           {LINK_GROUPS.map((group) => (

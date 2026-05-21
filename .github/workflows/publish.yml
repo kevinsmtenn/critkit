@@ -1,0 +1,57 @@
+# Publishes critkit to npm automatically whenever you publish a GitHub Release.
+#
+# ONE-TIME SETUP (no tokens, no secrets to manage):
+#   On npmjs.com, open the critkit package -> Settings -> "Trusted Publisher",
+#   choose GitHub Actions, and enter:
+#     Organization or user : kevinsmtenn
+#     Repository           : critkit
+#     Workflow filename    : publish.yml
+#     Environment          : (leave blank)
+#
+# TO CUT A RELEASE:
+#   1. npm version patch            # bumps package.json, commits, makes a git tag
+#   2. git push --follow-tags       # pushes the commit + tag to GitHub
+#   3. gh release create vX.Y.Z --generate-notes   # (or use the GitHub UI)
+#   -> this workflow then builds and publishes that version to npm.
+
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # lets npm verify this workflow's identity (Trusted Publishing + provenance)
+    steps:
+      - name: Check out the released code
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      - name: Upgrade npm (Trusted Publishing needs npm 11.5+)
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check
+        run: pnpm typecheck
+
+      - name: Build the package
+        run: pnpm build
+
+      # --ignore-scripts skips the prepublishOnly rebuild — we already built above.
+      - name: Publish to npm
+        run: npm publish --provenance --access public --ignore-scripts

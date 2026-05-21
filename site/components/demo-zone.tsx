@@ -16,13 +16,13 @@ import { Button } from "@/components/ui/button"
 
 const STEPS: React.ReactNode[] = [
   <>
-    Press <Kbd>C</Kbd>—crit mode arms across the whole page.
+    Press <Kbd>C</Kbd>. Crit mode arms across the whole page.
   </>,
   <>Hover the panel; elements highlight. Click one that&apos;s off.</>,
   <>
     Type a note, hit <Kbd>⏎</Kbd>. CritKit harvests the DOM context for you.
   </>,
-  <>The crit list docks to your screen edge—open it, hit Copy Crit Prompt.</>,
+  <>The crit list docks to your screen edge. Open it, copy the crit prompt.</>,
 ]
 
 /** An ordinary app surface, built from the same shadcn primitives as the rest
@@ -100,7 +100,7 @@ export function DemoZone() {
           index="02"
           label="Live demo"
           title="Crit this page. Right now."
-          description="CritKit is already running—no install, no sandbox. The panel below is an ordinary app surface. Walk it the way you'd walk your own build."
+          description="CritKit is already running. No install, no sandbox. The panel below is an ordinary app surface. Walk it the way you'd walk your own build."
         />
       </Reveal>
 

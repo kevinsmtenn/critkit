@@ -25,7 +25,7 @@ const CARD_DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://critkit.dev"),
-  title: "CritKit—Design crit with your coding agents",
+  title: "CritKit: Design crit with your coding agents",
   description: DESCRIPTION,
   applicationName: "CritKit",
   keywords: [
@@ -44,14 +44,14 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://critkit.dev",
     siteName: "CritKit",
-    title: "CritKit—Design crit with your coding agents",
+    title: "CritKit: Design crit with your coding agents",
     description: CARD_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
     site: "@critkitdev",
     creator: "@critkitdev",
-    title: "CritKit—Design crit with your coding agents",
+    title: "CritKit: Design crit with your coding agents",
     description: CARD_DESCRIPTION,
   },
 }

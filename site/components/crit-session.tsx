@@ -31,7 +31,7 @@ const STEPS = [
     n: "04",
     icon: ClipboardCheck,
     title: "Copy the prompt",
-    body: "Open the list, hit Copy Crit Prompt, paste it to your agent.",
+    body: "Open the list, copy the crit prompt, paste it to your agent.",
   },
 ]
 
@@ -43,7 +43,7 @@ export function CritSession() {
           index="01"
           label="The Crit"
           title="Four keystrokes from flaw to fix."
-          description="No mode you get trapped in, no prose to write from scratch. A single crit takes two to four seconds—a full-page session, a couple of minutes."
+          description="No mode you get trapped in, no prose to write from scratch. A single crit takes two to four seconds; a full-page session, a couple of minutes."
         />
       </Reveal>
 
