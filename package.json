@@ -35,6 +35,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
+    "dev:web": "pnpm --filter critkit-site dev",
+    "build:web": "pnpm --filter critkit-site build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "prepublishOnly": "pnpm build"
