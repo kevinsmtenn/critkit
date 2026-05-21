@@ -6,3 +6,5 @@ dist
 # Local-only planning docs — kept out of the public repo
 PRD-critkit.md
 PRD*.md
+.vercel
+.env*.local
