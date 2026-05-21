@@ -1,7 +1,8 @@
 import { critStore } from "./store"
 
-/** Whether an event target is a text field — where `C` should type, not toggle. */
-function isEditable(node: EventTarget): boolean {
+/** Whether an event target is a text field — where a key should type a
+ * character rather than fire a shortcut. */
+export function isEditable(node: EventTarget): boolean {
   if (!(node instanceof HTMLElement)) return false
   return (
     node.tagName === "INPUT" ||

@@ -36,7 +36,7 @@ export function Install() {
       </Reveal>
 
       <div className="mt-12 grid gap-6 lg:grid-cols-2">
-        <Reveal whileInView className="flex flex-col gap-6">
+        <Reveal whileInView className="flex min-w-0 flex-col gap-6">
           <InstallTabs />
           <div className="flex gap-3 border border-border bg-card p-4">
             <ShieldCheck
@@ -51,13 +51,13 @@ export function Install() {
               <code className="font-mono text-xs text-foreground">
                 NODE_ENV
               </code>
-              —CritKit never ships in your production bundle. Nothing to
+              . CritKit never ships in your production bundle. Nothing to
               misconfigure into production.
             </p>
           </div>
         </Reveal>
 
-        <Reveal whileInView delay={0.1} className="flex flex-col gap-6">
+        <Reveal whileInView delay={0.1} className="flex min-w-0 flex-col gap-6">
           <CodeBlock file="critkit-dev.tsx" code={CRITKIT_DEV} />
           <CodeBlock file="app/layout.tsx" code={LAYOUT} />
         </Reveal>

@@ -12,7 +12,7 @@ export function LiveCritCount() {
 
   const hint =
     count > 0
-      ? "Open the crit list—docked to your screen edge—and hit Copy Crit Prompt."
+      ? "Open the crit list, docked to your screen edge, and copy the crit prompt."
       : on
         ? "Crit mode is on. Hover the panel and click anything."
         : "Press C, then click an element in the panel."
@@ -29,7 +29,7 @@ export function LiveCritCount() {
         />
         <span className="text-foreground tabular-nums">{count}</span>
         <span className="text-muted-foreground">
-          {count === 1 ? "crit" : "crits"} captured
+          {count === 1 ? "crit" : "crits"} logged
         </span>
       </span>
       <span aria-hidden className="h-3 w-px bg-border" />

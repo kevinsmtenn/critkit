@@ -19,7 +19,7 @@ export function SiteNav() {
             CritKit
           </span>
           <span className="hidden border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground sm:inline">
-            v0.1.0
+            v0.1.1
           </span>
         </a>
 

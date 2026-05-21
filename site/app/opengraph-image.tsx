@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og"
 
-export const alt = "CritKit — Design crit with your coding agents"
+export const alt = "CritKit: Design crit with your coding agents"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 

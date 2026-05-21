@@ -16,11 +16,18 @@ import {
 } from "motion/react"
 import { anchorOrigin, DOCK_ANCHORS, nearestAnchor, type DockSize } from "../dock"
 import { shortLocation } from "../format"
+import { isEditable } from "../shortcut"
 import { critStore } from "../store"
 import type { Crit, DockAnchor } from "../types"
 import { buildPrompt } from "../writer"
 
 type StartDrag = (event: ReactPointerEvent) => void
+
+/** "Copy 3 crits as a prompt" — the footer button label, count-aware and
+ * pluralized. `verb` swaps "Copy" → "Copied" for the post-copy ✓ state. */
+function copyLabel(count: number, verb: "Copy" | "Copied"): string {
+  return `${verb} ${count} ${count === 1 ? "crit" : "crits"} as a prompt`
+}
 
 // Magnet field: inside OUTER the dock is pulled toward the nearest anchor;
 // inside INNER it locks fully onto it.
@@ -51,6 +58,40 @@ function TrashIcon() {
       aria-hidden="true"
     >
       <path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13" />
+    </svg>
+  )
+}
+
+function CopyIcon() {
+  return (
+    <svg
+      className="ck-copy"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      aria-hidden="true"
+    >
+      <path d="M8 8h12v12H8zM16 8V4H4v12h4" />
+    </svg>
+  )
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      className="ck-check"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      aria-hidden="true"
+    >
+      <path d="M5 13l4 4 10-11" />
     </svg>
   )
 }
@@ -90,7 +131,9 @@ export function ListPanel({
   const [size, setSize] = useState<DockSize | null>(null)
   const [dragging, setDragging] = useState(false)
   const [hintAnchor, setHintAnchor] = useState<DockAnchor>(anchor)
-  const [copied, setCopied] = useState(false)
+  // The number of crits in the last copy (1 for a per-capture auto-copy, all of
+  // them for the footer button), or null while the button shows its idle label.
+  const [copiedCount, setCopiedCount] = useState<number | null>(null)
   const placed = useRef(false)
   const draggingRef = useRef(false)
   const draggedRef = useRef(false)
@@ -148,8 +191,16 @@ export function ListPanel({
     if (!visible) placed.current = false
   }, [visible])
 
-  // Copy the agent prompt and flash the confirmation — shared by the panel's
-  // Copy button and the ⌘⌥C shortcut.
+  // Flash the footer button's ✓ confirmation with how many crits were copied —
+  // shared by the manual Copy button, the ⌘⌥C shortcut, and the auto-copy.
+  const flashCopied = useCallback((count: number): void => {
+    setCopiedCount(count)
+    window.clearTimeout(copyTimer.current)
+    copyTimer.current = window.setTimeout(() => setCopiedCount(null), 1800)
+  }, [])
+
+  // Copy the agent prompt — shared by the panel's Copy button and the ⌘⌥C
+  // shortcut. An explicit copy ends the session.
   const copyPrompt = useCallback((): void => {
     if (crits.length === 0) return
     void navigator.clipboard
@@ -161,20 +212,39 @@ export function ListPanel({
         // Surface the panel so the ✓ confirmation is visible even when the
         // shortcut fires while the List is collapsed to its badge.
         critStore.setPanelOpen(true)
-        setCopied(true)
-        window.clearTimeout(copyTimer.current)
-        copyTimer.current = window.setTimeout(() => setCopied(false), 1800)
+        flashCopied(crits.length)
       })
       .catch(() => {
         // Clipboard blocked (no focus / permissions) — leave the button as-is.
       })
-  }, [crits])
+  }, [crits, flashCopied])
+
+  // Each capture auto-copies just the crit that was added — a single-crit
+  // prompt, ready to paste — without ending the session. The footer button is
+  // what copies every crit at once. prevCount starts at the mounted length so
+  // crits restored from sessionStorage don't auto-copy.
+  const prevCount = useRef(crits.length)
+  useEffect(() => {
+    if (crits.length > prevCount.current) {
+      const fresh = crits.slice(prevCount.current)
+      void navigator.clipboard
+        .writeText(buildPrompt(fresh))
+        .then(() => flashCopied(fresh.length))
+        .catch(() => {
+          // Clipboard blocked (no focus / permissions) — leave the button as-is.
+        })
+    }
+    prevCount.current = crits.length
+  }, [crits, flashCopied])
 
   // ⌘⌥C (⌃⌥C on Windows/Linux) copies the prompt from anywhere in the session.
   useEffect(() => {
     const onCopyKey = (event: KeyboardEvent): void => {
       if (event.repeat || event.code !== "KeyC" || event.shiftKey) return
       if (!((event.metaKey || event.ctrlKey) && event.altKey)) return
+      // Self-guard against text fields — same as the `C` toggle — so the combo
+      // never fires while typing (Ctrl+Alt+C overlaps AltGr+C on some layouts).
+      if (event.composedPath().some(isEditable)) return
       event.preventDefault()
       copyPrompt()
     }
@@ -269,7 +339,7 @@ export function ListPanel({
               crits={crits}
               reduce={reduce}
               collapsible={!critMode}
-              copied={copied}
+              copiedCount={copiedCount}
               onCopy={copyPrompt}
               onGrab={startDrag}
               onMinimize={minimize}
@@ -353,7 +423,7 @@ function Panel({
   crits,
   reduce,
   collapsible,
-  copied,
+  copiedCount,
   onCopy,
   onGrab,
   onMinimize,
@@ -361,7 +431,7 @@ function Panel({
   crits: Crit[]
   reduce: boolean
   collapsible: boolean
-  copied: boolean
+  copiedCount: number | null
   onCopy: () => void
   onGrab: StartDrag
   onMinimize: () => void
@@ -434,24 +504,24 @@ function Panel({
 
       <div className="ck-panel-foot">
         <button
-          className={`ck-btn${copied ? " ck-btn-copied" : ""}`}
+          className={`ck-btn${copiedCount !== null ? " ck-btn-copied" : ""}`}
           disabled={crits.length === 0}
           onClick={onCopy}
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
-              key={copied ? "copied" : "idle"}
+              key={copiedCount !== null ? `copied-${crits.length}` : "idle"}
               className="ck-btn-face"
               initial={reduce ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
               transition={{ duration: 0.14 }}
             >
-              {copied ? (
-                "✓ Copied — paste to your coding agent"
+              {copiedCount !== null ? (
+                `✓ ${copyLabel(copiedCount, "Copied")}`
               ) : (
                 <>
-                  Copy Crit Prompt
+                  {copyLabel(crits.length, "Copy")}
                   <span className="ck-kbd-group">
                     {COPY_KEYS.map((key) => (
                       <kbd key={key} className="ck-kbd">
@@ -478,6 +548,25 @@ function Row({
   index: number
   reduce: boolean
 }) {
+  // Per-row copy flashes the icon to a ✓ briefly, then reverts. Unlike the
+  // footer button, copying a single crit doesn't end the session.
+  const [copied, setCopied] = useState(false)
+  const copyTimer = useRef(0)
+  useEffect(() => () => window.clearTimeout(copyTimer.current), [])
+
+  const copyCrit = (): void => {
+    void navigator.clipboard
+      .writeText(buildPrompt([crit]))
+      .then(() => {
+        setCopied(true)
+        window.clearTimeout(copyTimer.current)
+        copyTimer.current = window.setTimeout(() => setCopied(false), 1500)
+      })
+      .catch(() => {
+        // Clipboard blocked (no focus / permissions) — leave the icon as-is.
+      })
+  }
+
   return (
     <motion.div
       className="ck-row"
@@ -500,6 +589,13 @@ function Row({
           editable comment sits under it. */}
       <div className="ck-row-top">
         <span className="ck-row-src ck-mono">{shortLocation(crit)}</span>
+        <button
+          className={`ck-icon-btn ck-copy-btn${copied ? " ck-copied" : ""}`}
+          aria-label={copied ? "Copied" : "Copy crit as a prompt"}
+          onClick={copyCrit}
+        >
+          {copied ? <CheckIcon /> : <CopyIcon />}
+        </button>
         <button
           className="ck-icon-btn ck-del"
           aria-label="Delete crit"
