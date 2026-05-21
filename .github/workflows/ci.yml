@@ -1,0 +1,39 @@
+# Gates every PR and every push to main: type-checks, lints, and builds the
+# critkit library. The Vercel build already covers the `site/` package on each
+# deploy — this workflow covers `src/` (the published npm package), which the
+# site build never compiles because it imports critkit from the built `dist/`.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build the package
+        run: pnpm build
