@@ -3,6 +3,7 @@ import { Reveal } from "@/components/reveal"
 import { Kbd } from "@/components/kbd"
 import { LiveCritCount } from "@/components/live-crit-count"
 import { StartCritButton } from "@/components/start-crit-button"
+import { CopyCritPromptButton } from "@/components/copy-crit-prompt"
 import {
   Card,
   CardContent,
@@ -121,7 +122,10 @@ export function DemoZone() {
             </ol>
             <div className="mt-auto flex flex-col gap-3">
               <LiveCritCount />
-              <StartCritButton size="default" />
+              <div className="flex flex-wrap gap-2">
+                <StartCritButton size="default" />
+                <CopyCritPromptButton size="default" />
+              </div>
             </div>
           </div>
         </Reveal>

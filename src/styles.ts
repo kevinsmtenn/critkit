@@ -181,7 +181,8 @@ export const CRITKIT_CSS = `
 .ck-icon-btn:hover { color: #f4f4f5; }
 .ck-icon-btn:active { transform: scale(0.9); }
 .ck-del:hover { color: #f87171; }
-.ck-trash { width: 13px; height: 13px; display: block; }
+.ck-copied, .ck-copied:hover { color: #4ade80; }
+.ck-trash, .ck-copy, .ck-check { width: 13px; height: 13px; display: block; }
 
 /* — crit-mode highlight (tracks the hovered element) — */
 .ck-highlight {

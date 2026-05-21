@@ -13,23 +13,32 @@ function formatSource(crit: Crit): string {
 }
 
 /**
- * Assemble the crit list into a ready-to-paste agent prompt: a short template
- * wrapper plus one numbered, source-anchored item per crit. This is the thing
- * you copy whole into your coding agent.
+ * Assemble crits into a ready-to-paste agent prompt: a short template wrapper
+ * plus one source-anchored item per crit — numbered into a work-through list
+ * when there's more than one, a single plain item when there's just one (the
+ * shape produced by a per-capture auto-copy). Copy it whole into your agent.
  */
 export function buildPrompt(crits: Crit[]): string {
   if (crits.length === 0) return ""
 
-  const header = [
-    "Here's a list of feedback from a crit session. Please work through it top to bottom.",
-    "First, turn every item below into a to-do for yourself so you don't skip any.",
-    "Each item carries a source location and values harvested from the live DOM.",
-    "",
-  ]
+  const single = crits.length === 1
+
+  const header = single
+    ? [
+        "Here's a piece of design feedback from a crit session.",
+        "It carries a source location and values harvested from the live DOM.",
+        "",
+      ]
+    : [
+        "Here's a list of feedback from a crit session. Please work through it top to bottom.",
+        "First, turn every item below into a to-do for yourself so you don't skip any.",
+        "Each item carries a source location and values harvested from the live DOM.",
+        "",
+      ]
 
   const items = crits.map((crit, index) => {
     const lines = [
-      `${index + 1}. ${
+      `${single ? "" : `${index + 1}. `}${
         crit.note.trim() || "(needs attention — see observed values)"
       }`,
       `   source: ${formatSource(crit)}`,
