@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-const PLACEHOLDER = `Paste a copied crit prompt here to see exactly what lands in your coding agent.`
+const PLACEHOLDER = `Paste the crit prompt you copied from the Profile panel above to see exactly what lands in your coding agent.`
 
 /** The paste target for section 03 — styled as a terminal: window chrome, a
  * prompt caret, monospace. A visitor copies a real prompt out of the live demo
@@ -23,7 +23,7 @@ export function PromptPaste() {
             <span className="size-2 border border-white/15" />
           </span>
           <span className="ml-1 font-mono text-[11px] text-muted-foreground">
-            crit-prompt.txt
+            crit-prompt
           </span>
         </div>
         {empty ? (

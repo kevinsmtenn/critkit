@@ -21,7 +21,7 @@ const LINK_GROUPS = [
   {
     title: "Social",
     links: [
-      { label: "X (Twitter)", href: "https://x.com/critkitdev" },
+      { label: "X", href: "https://x.com/critkitdev" },
       { label: "Threads", href: "https://www.threads.com/@critkitdev" },
     ],
   },
