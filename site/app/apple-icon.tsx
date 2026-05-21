@@ -17,7 +17,7 @@ export default function AppleIcon() {
           background: "#0a0a0a",
         }}
       >
-        <div style={{ width: 100, height: 100, background: "#ef4444" }} />
+        <div style={{ width: 56, height: 56, background: "#ef4444" }} />
       </div>
     ),
     size,
