@@ -20,6 +20,7 @@ import { isEditable } from "../shortcut"
 import { critStore } from "../store"
 import type { Crit, DockAnchor } from "../types"
 import { buildPrompt } from "../writer"
+import { copyText } from "../clipboard"
 
 type StartDrag = (event: ReactPointerEvent) => void
 
@@ -203,20 +204,16 @@ export function ListPanel({
   // shortcut. An explicit copy ends the session.
   const copyPrompt = useCallback((): void => {
     if (crits.length === 0) return
-    void navigator.clipboard
-      .writeText(buildPrompt(crits))
-      .then(() => {
-        // Copying the prompt ends the session — drop crit mode so the
-        // picker's crosshair clears and the page is interactive again.
-        critStore.setCritMode(false)
-        // Surface the panel so the ✓ confirmation is visible even when the
-        // shortcut fires while the List is collapsed to its badge.
-        critStore.setPanelOpen(true)
-        flashCopied(crits.length)
-      })
-      .catch(() => {
-        // Clipboard blocked (no focus / permissions) — leave the button as-is.
-      })
+    void copyText(buildPrompt(crits)).then((ok) => {
+      if (!ok) return
+      // Copying the prompt ends the session — drop crit mode so the
+      // picker's crosshair clears and the page is interactive again.
+      critStore.setCritMode(false)
+      // Surface the panel so the ✓ confirmation is visible even when the
+      // shortcut fires while the List is collapsed to its badge.
+      critStore.setPanelOpen(true)
+      flashCopied(crits.length)
+    })
   }, [crits, flashCopied])
 
   // Each capture auto-copies just the crit that was added — a single-crit
@@ -227,12 +224,9 @@ export function ListPanel({
   useEffect(() => {
     if (crits.length > prevCount.current) {
       const fresh = crits.slice(prevCount.current)
-      void navigator.clipboard
-        .writeText(buildPrompt(fresh))
-        .then(() => flashCopied(fresh.length))
-        .catch(() => {
-          // Clipboard blocked (no focus / permissions) — leave the button as-is.
-        })
+      void copyText(buildPrompt(fresh)).then((ok) => {
+        if (ok) flashCopied(fresh.length)
+      })
     }
     prevCount.current = crits.length
   }, [crits, flashCopied])
@@ -555,16 +549,12 @@ function Row({
   useEffect(() => () => window.clearTimeout(copyTimer.current), [])
 
   const copyCrit = (): void => {
-    void navigator.clipboard
-      .writeText(buildPrompt([crit]))
-      .then(() => {
-        setCopied(true)
-        window.clearTimeout(copyTimer.current)
-        copyTimer.current = window.setTimeout(() => setCopied(false), 1500)
-      })
-      .catch(() => {
-        // Clipboard blocked (no focus / permissions) — leave the icon as-is.
-      })
+    void copyText(buildPrompt([crit])).then((ok) => {
+      if (!ok) return
+      setCopied(true)
+      window.clearTimeout(copyTimer.current)
+      copyTimer.current = window.setTimeout(() => setCopied(false), 1500)
+    })
   }
 
   return (

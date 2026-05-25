@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Check, Copy } from "lucide-react"
 
+import { copyText } from "@/lib/clipboard"
 import { cn } from "@/lib/utils"
 
 /** A small inline copy control — flips to a check for ~1.8s after a copy. */
@@ -22,13 +23,10 @@ export function CopyButton({
       type="button"
       aria-label={label ?? "Copy to clipboard"}
       onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(value)
-          setCopied(true)
-          window.setTimeout(() => setCopied(false), 1800)
-        } catch {
-          /* clipboard blocked — no-op */
-        }
+        const ok = await copyText(value)
+        if (!ok) return
+        setCopied(true)
+        window.setTimeout(() => setCopied(false), 1800)
       }}
       className={cn(
         "inline-flex items-center gap-1.5 font-mono text-[11px] tracking-wide whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground",

@@ -8,7 +8,7 @@ export function PromptOutput() {
       <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-14">
         <Reveal whileInView>
           <SectionHeader
-            index="03"
+            index="01"
             label="The output"
             title="Your taste. You paste."
             description="Paste a copied crit prompt into the field to see exactly what your agent receives: every item source-anchored, with values harvested live from the DOM."

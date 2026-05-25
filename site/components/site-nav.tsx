@@ -3,8 +3,6 @@ import { GithubIcon } from "@/components/icons"
 import { LiveStatus } from "@/components/live-status"
 
 const LINKS = [
-  { href: "#crit-session", label: "Crit" },
-  { href: "#demo", label: "Demo" },
   { href: "#output", label: "Output" },
   { href: "#install", label: "Install" },
 ]

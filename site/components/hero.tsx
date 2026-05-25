@@ -1,9 +1,22 @@
 import { Reveal } from "@/components/reveal"
 import { CopyButton } from "@/components/copy-button"
 import { StartCritButton } from "@/components/start-crit-button"
-import { CritPanelMock } from "@/components/crit-panel-mock"
+import { CopyCritPromptButton } from "@/components/copy-crit-prompt"
+import { LiveCritCount } from "@/components/live-crit-count"
+import { Kbd } from "@/components/kbd"
 
 const INSTALL = "npm i -D critkit"
+
+const STEPS: React.ReactNode[] = [
+  <>
+    Press <Kbd>C</Kbd>. Crit mode arms across the whole page.
+  </>,
+  <>Hover the panel; elements highlight. Click one that&apos;s off.</>,
+  <>
+    Type a note, hit <Kbd>⏎</Kbd>. CritKit harvests the DOM context for you.
+  </>,
+  <>The crit list docks to your screen edge. Open it, copy the crit prompt.</>,
+]
 
 export function Hero() {
   return (
@@ -64,8 +77,31 @@ export function Hero() {
             </Reveal>
           </div>
 
-          <Reveal delay={0.16} className="flex justify-center lg:justify-end">
-            <CritPanelMock />
+          <Reveal delay={0.16} className="w-full">
+            <div className="flex h-full flex-col gap-7 border border-border bg-card p-6 md:p-7">
+              <div className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.18em] uppercase text-muted-foreground">
+                <span className="size-1.5 bg-foreground" />
+                Try it on this page
+              </div>
+
+              <ol className="flex flex-col gap-4">
+                {STEPS.map((step, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="mt-px font-mono text-[11px] text-muted-foreground/45">
+                      0{i + 1}
+                    </span>
+                    <span className="font-sans text-[13px] leading-relaxed text-muted-foreground">
+                      {step}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+
+              <div className="mt-auto flex flex-col gap-3">
+                <LiveCritCount />
+                <CopyCritPromptButton size="default" />
+              </div>
+            </div>
           </Reveal>
         </div>
       </div>
