@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Check, Copy } from "lucide-react"
 
 import { buildPrompt } from "@/lib/critkit"
+import { copyText } from "@/lib/clipboard"
 import { useCritKit } from "@/hooks/use-critkit"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -26,28 +27,20 @@ export function CopyCritPromptButton({
   const count = crits.length
   const [copied, setCopied] = useState(false)
 
+  if (count === 0) return null
+
   return (
     <Button
       type="button"
       size={size}
       variant="outline"
-      disabled={count === 0}
       onClick={async () => {
-        if (count === 0) return
-        try {
-          await navigator.clipboard.writeText(buildPrompt(crits))
-          setCopied(true)
-          window.setTimeout(() => setCopied(false), 1800)
-        } catch {
-          /* clipboard blocked — no-op */
-        }
+        const ok = await copyText(buildPrompt(crits))
+        if (!ok) return
+        setCopied(true)
+        window.setTimeout(() => setCopied(false), 1800)
       }}
       className={cn("font-mono", className)}
-      title={
-        count === 0
-          ? "Log a crit first, then copy the prompt for your agent."
-          : undefined
-      }
     >
       {copied ? (
         <Check className="text-[oklch(0.7_0.16_150)]" />
