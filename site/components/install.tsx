@@ -28,7 +28,7 @@ export function Install() {
     <Section id="install" className="py-20 md:py-28">
       <Reveal whileInView>
         <SectionHeader
-          index="04"
+          index="02"
           label="Install"
           title="One install. Dev only."
           description="Register CritKit once, on the client, in development. It never touches a production build."
